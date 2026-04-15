@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<!-- Page header -->
+<div class="overlay"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col mt-3 mb-3">
+            <h1 class="page-title">About Us</h1>
+            <hr class="mb-1">
+        </div>
+    </div>
+   
+</div>
+<div class="container">
+<div class="row">
+    <!-- Text section -->
+    <div class="col-md-6 mt-3 mb-3 about">
+    <p>The name, motivated by Moby Dick, evoked the sentiment of the high oceans and the marine convention of the early espresso brokers.</p>
+    <p>In 1981, Howard Schultz (Coffee-shop director, president, and CEO) first strolled into an Coffee-shop store. From his first measure of Sumatra, Howard was drawn into Coffee-shop and joined a year later.</p>
+    <p>After a year, in 1983, Howard made a trip to Italy and ended up dazzled by Italian coffeehouses and the sentiment of the espresso encounter. He had a dream to take the Italian café custom back to the United Kingdom.</p>
+    <p>Today, with stores in excess of 75 markets, Coffee-shop is the chief roaster and retailer of forte espresso on the planet. Furthermore, with each container, we endeavor to bring both our legacy and an extraordinary affair to life.</p>
+    </div>
+    <div class="col-md-6 mt-3 mb-3 text-center mx-auto">
+    <img class="coffee-bar" src="{% static 'images/coffeebar.jpeg' %}"
+        alt="Man stood in a coffee shop and buying coffee">
+    </div>
+</div>
+</div>
+{% endblock %}

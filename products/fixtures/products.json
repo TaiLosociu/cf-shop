@@ -1,0 +1,198 @@
+[
+    {
+      "model": "products.product",
+      "pk": 1,
+      "fields": {
+        "category": 1,
+        "sku": "COFFEE-001",
+        "name": "Cà Phê Lavazza Oro",
+        "description": "Hạt cà phê Lavazza là sự pha trộn giữa cà phê Arabica từ Brazil, được chứng nhận RainForest. Thưởng thức một ly cà phê đậm đà với hương vị tinh tế của ngũ cốc và trái cây khô. 1kg.",
+        "price": 170000.00,
+        "image": "coffee-1.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Lavazza+Oro",
+        "rating": "3.00"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 2,
+      "fields": {
+        "category": 1,
+        "sku": "COFFEE-002",
+        "name": "Cà Phê Intenso",
+        "description": "Hạt cà phê Intenso là sự pha trộn giữa 80% Arabica và 20% Robusta (Colombia, Brazil, Guatemala, Costa Rica). Thích hợp cho một ly espresso đậm đà với lớp bọt kem dày và hương vị cacao. 1kg.",
+        "price": 150000.00,
+        "image": "coffee-2.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Intenso",
+        "rating": "4.00"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 3,
+      "fields": {
+        "category": 1,
+        "sku": "COFFEE-003",
+        "name": "Cà Phê Zoegas Hazienda",
+        "description": "Hạt cà phê Hazienda là sự pha trộn giữa 100% Arabica từ Trung và Nam Mỹ. Cho những người yêu thích cà phê cân bằng với hương thơm quyến rũ. 1kg hạt cà phê.",
+        "price": 200000.00,
+        "image": "coffee-3.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Hazienda",
+        "rating": "5.00"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 4,
+      "fields": {
+        "category": 1,
+        "sku": "COFFEE-004",
+        "name": "Cà Phê Zoegas Dellacasa",
+        "description": "Khám phá loại pha trộn đặc biệt này, là sự kết hợp của các hương vị cân bằng và ngọt ngào với những nốt hương thảo mộc và maple. Một loại cà phê 100% Arabica chất lượng cao. Đóng gói: 190g hạt cà phê",
+        "price": 200000.00,
+        "image": "coffee-4.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Dellacasa",
+        "rating": null
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 5,
+      "fields": {
+        "category": 1,
+        "sku": "COFFEE-005",
+        "name": "Cà Phê Lavazza Cremaearoma",
+        "description": "Cremaearoma là sự pha trộn giữa 85% Arabica và 15% Robusta. Cho hương vị cà phê đậm đà với hương hoa và sô cô la. Được rang tại Ý. 1kg hạt cà phê.",
+        "price": 180000.00,
+        "image": "coffee-5.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Cremaearoma",
+        "rating": "2.00"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 6,
+      "fields": {
+        "category": 1,
+        "sku": "COFFEE-006",
+        "name": "Cà Phê Zoegas Intenzo",
+        "description": "Khám phá hạt cà phê Intenzo của Guatemala Quetzalito: 100% Arabica từ khu vực Huehuetenango ở Panama. Thưởng thức một ly cà phê cân bằng và có hương vị rượu với những nốt hương sô cô la. 250g hạt cà phê.",
+        "price": 200000.00,
+        "image": "coffee-6.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Intenzo",
+        "rating": "4.00"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 7,
+      "fields": {
+        "category": 1,
+        "sku": "COFFEE-007",
+        "name": "Cà Phê Crema",
+        "description": "Những hạt cà phê Crema của nhà sản xuất cà phê Ý Crema là sự pha trộn giữa Arabica và Robusta, mang lại một ly espresso đậm đà với hương vị slightly spicy và lớp crema dày. 1kg",
+        "price": 150000.00,
+        "image": "coffee-7.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Crema",
+        "rating": null
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 8,
+      "fields": {
+        "category": 1,
+        "sku": "COFFEE-008",
+        "name": "Cà Phê Truyền Thống",
+        "description": "100% Arabica từ Brazil, Guatemala, Ấn Độ và Mexico. Cho một ly espresso đậm đà với hương vị trái cây và dư vị kéo dài. Rang tại Ý. 250g hạt cà phê.",
+        "price": 150000.00,
+        "image": "coffee-8.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Truyền+Thống",
+        "rating": null
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 9,
+      "fields": {
+        "category": 1,
+        "sku": "COFFEE-009",
+        "name": "Cà Phê Espresso",
+        "description": "Khám phá Blend 189 từ công ty rang cà phê Parisian Espresso. Một sự pha trộn hữu cơ của 100% Arabica từ Brazil và Honduras. Cho một ly espresso kiểu Ý với những nốt hương caramel và hạt dẻ. 200g hạt cà phê.",
+        "price": 150000.00,
+        "image": "coffee-9.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Espresso",
+        "rating": null
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 10,
+      "fields": {
+        "category": 2,
+        "sku": "MACHINE-001",
+        "name": "Espresso Machine",
+        "description": "Máy pha cà phê Espresso là một chiếc moka điện với dung tích 6 hoặc 3 cốc và điều khiển số. Máy pha cà phê này được trang bị đồng hồ hẹn giờ có thể lập trình trong 24 giờ.",
+        "price": 490000.00,
+        "image": "machine-1.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Espresso+Machine",
+        "rating": null
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 11,
+      "fields": {
+        "category": 3,
+        "sku": "GRINDER-001",
+        "name": "Máy Xay Cà Phê Thủ Công",
+        "description": "Thưởng thức ly cà phê tươi ngon nhất ― Máy xay cà phê thủ công này có bộ đĩa xay gốm điều chỉnh được với hơn 18 cấp độ xay thủ công để đảm bảo bạn có 100% độ chính xác & kiểm soát độ nhuyễn của hạt cà phê",
+        "price": 290000.00,
+        "image": "grinder-1.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Coffee+Grinder",
+        "rating": null
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 12,
+      "fields": {
+        "category": 2,
+        "sku": "MACHINE-002",
+        "name": "Máy Tạo Bọt Sữa",
+        "description": "Máy tạo bọt sữa Aeroccino có thể biến đổi sữa thành một lớp bọt nhẹ và mịn màng. Bạn có thể rót bọt vào với tốc độ bạn muốn, để kiểm soát cách nó được trộn với cà phê yêu thích của bạn.",
+        "price": 190000.00,
+        "image": "machine-2.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Milk+Frother",
+        "rating": null
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 13,
+      "fields": {
+        "category": 3,
+        "sku": "GRINDER-002",
+        "name": "Máy Xay Cà Phê Điện Tử",
+        "description": "Máy xay cà phê điện tử với 20 mức độ xay khác nhau, từ mịn nhất cho espresso đến thô nhất cho French press. Thiết kế hiện đại với công suất 110W.",
+        "price": 450000.00,
+        "image": "grinder-2.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Electric+Grinder",
+        "rating": "4.00"
+      }
+    },
+    {
+      "model": "products.product",
+      "pk": 14,
+      "fields": {
+        "category": 3,
+        "sku": "GRINDER-003",
+        "name": "Máy Xay Cà Phê Burr",
+        "description": "Máy xay cà phê Burr chất lượng cao với hai bánh trong có thể tháo rời để vệ sinh. Có 16 cấp độ xay từ mịn đến thô, phù hợp cho tất cả các loại pha cà phê.",
+        "price": 350000.00,
+        "image": "grinder-3.jpg",
+        "image_url": "https://via.placeholder.com/400x400?text=Burr+Grinder",
+        "rating": null
+      }
+    }
+  ]

@@ -1,0 +1,93 @@
+<footer class="text-center text-white"
+          style="background-color: #3e4551">
+    <div class="container p-4 pb-0">
+      <!-- Section: Links -->
+      <section>
+        <div class="row">
+          <!-- Left grid -->
+          <div class="col-lg-6 col-md-6 mb-4 mb-md-0">
+            <h5 class="text-uppercase">Liên hệ với chúng tôi</h5>
+            <h6>Địa chỉ:</h6>
+            <p>Abbey Road, London</p>
+
+            <h6>Điện thoại</h6>
+            <p>+12345678910</p>
+
+            <h6>Email</h6>
+            <p>Coffee@gmail.com</p>
+          </div>
+          <!-- Right grid -->
+          <div class="col-lg-6 col-md-6 col-sm">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46686.36192699382!2d-0.20992837277776324!3d51.53013993613502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b4b0814cc7d%3A0xfd303958cd8d0fac!2sThe%20Beatles%20crosswalk!5e0!3m2!1ssv!2sse!4v1679480175744!5m2!1ssv!2sse"
+            style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </section>
+      <hr>
+
+      <!--Newsletter-->
+      <div class="d-flex justify-content-center align-items-center">
+            
+            <form method="POST" action="{% url 'newsletter' %}"
+            class="col-12 col-md-7 col-lg-6 col-xl-3 form-inline">
+            {% csrf_token %}
+            {{ form.|crispy }}
+            <div class="form-group mt-2 text-center mt-3">
+                <h4 class="signup1">Đăng ký để nhận các ưu đãi đặc biệt..
+                </h4>
+            </div>
+            <br>
+            <br>
+            <div class="form-group container1 mt-8 mb-8 text-center">
+                <label for="name" class="sr-only">Name</label>
+                <input type="text" class="form-control w-100" name="name" id="name"
+                    placeholder="Enter your Name...">
+                <br>
+                <br>
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" class="form-control mt-2 w-100" name="email" id="email"
+                    placeholder="Enter your Email..">
+                <br>
+                <br>
+                <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                <button type="submit" class="btn mt-4 mb-6 signupbutton">Đăng ký</button>
+            </div>
+            </form>
+      </div>
+      
+      <hr>
+      <!--  Social media section -->
+      <div class="mb-4 text-center">
+        <p>Kết nối với chúng tôi trên mạng xã hội:</p>
+        <!-- Facebook -->
+        <a
+           class="btn btn-outline-light btn-floating m-1"
+           href="https://www.facebook.com/"
+           role="button" rel="noopener noreferer nofollow" target="_blank"
+           ><i class="fab fa-facebook-f"></i
+          ></a>
+
+        <!-- Twitter -->
+        <a
+           class="btn btn-outline-light btn-floating m-1"
+           href="https://www.twitter.com/"
+           role="button" rel="noopener noreferer nofollow" target="_blank"
+           ><i class="fab fa-twitter"></i
+          ></a>
+        <!-- Instagram -->
+        <a
+           class="btn btn-outline-light btn-floating m-1"
+           href="https://www.instagram.com/"
+           role="button" rel="noopener noreferer nofollow" target="_blank"
+           ><i class="fab fa-instagram"></i
+          ></a>
+           </div>
+    </div>
+    <!-- Copyright -->
+    <div
+         class="text-center p-3"
+         style="background-color: rgba(0, 0, 0, 0.2)">
+      © 2023 Bản quyền:
+      <a class="text-white" href="https://mdbootstrap.com/">Coffee Shop</a>
+    </div>
+</footer>

@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+<!--Product image -->
+{% block content %}
+    <div class="overlay"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
+                <div class="image-container my-5">
+                    {% if product.image %}
+                        <a href="{{ product.image.url }}" target="_blank">
+                            <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+                        </a>
+                        {% else %}
+                        <a href="">
+                            <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <!--Product info -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="product-details-container mb-5 mt-md-5">
+                    <p class="mb-0">{{ product.name }}</p>
+                    <p class="lead mb-0 text-left font-weight-bold">₫{{ product.price }}</p>
+                    <div class="row">
+                        <div class="col">
+                            {% if product.rating %}
+                            <p class="rating-icon card-description mb-2"><strong>Rating:</strong> {{ product.rating }} /
+                                5 <i class="fa-sharp fa-solid fa-mug-saucer"></i></p>
+                            {% else %}
+                            <p class="text-muted card-description mb-2">No Rating</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if request.user.is_superuser %}
+                    <small class="ml-3">
+                    <a href="{% url 'edit_product' product.id %}">Sửa</a> | 
+                    <a class="text-danger" href="{% url 'delete_product' product.id %}">Xóa</a>
+                        </small>
+                    {% endif %}
+                    <p class="mt-3">{{ product.description }}</p>
+                    <form class="form pb-3" action="{% url 'add_to_bag' product.id %}" method="POST">
+                        {% csrf_token %}
+                        <p class="mt-3"><strong>Quantity:</strong></p>
+                                <div class="form-group w-50">
+                                    <div class="input-group input-group-{{ product.id }}">
+                                        <div class="input-group-prepend">
+                                            <button class="decrement-qty btn btn-danger rounded-0 decrement-qty_{{ product.id }}" 
+                                                data-item_id="{{ product.id }}">
+                                                <span class="icon">
+                                                    <i class="fas fa-minus"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <input class="form-control qty_input id_qty_{{ product.id }}" type="number"
+                                            name="quantity" value="1" min="1" max="99"
+                                            data-item_id="{{ product.id }}">
+                                        <div class="input-group-append">
+                                            <button class="increment-qty btn btn-primary rounded-0 increment-qty_{{ product.id }}"
+                                                data-item_id="{{ product.id }}">
+                                                <span class="icon">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                            <input type="submit" class="btn btn-outline-dark" value="Add to Bag">
+                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                        </div>
+                    </form>
+                    <!-- Keep shopping button -->
+                    <a href="{% url 'products' %}" class="small">
+                        <i class="fas fa-chevron-left"></i>
+                        Keep Shopping
+                    </a>
+                    <hr>
+                    <!--Review card-->
+                    <div class="card">
+                        <h4 class="card-header">Reviews</h4>
+                        <div class="card-body bg-light">
+                            {% if not user.is_authenticated %}
+                                <div class="card-body">
+                                    <h4 class="card-subtitle mb-2" style="color: #000000">Would you like to review this product?
+                                    </h4>
+                                    <div class="card-body mb-3">
+                                        <p class="card-text register-text">Please either <a style="color:#0011ff"
+                                                href="{% url 'account_login' %}"><strong>sign in</strong></a> to your account or
+                                        <a style="color:#0011ff" href="{% url 'account_signup' %}" class="btn standard-btn register-btn">Register first.</p></a>
+                                    </div>
+                                </div>
+                                    {% else %}
+                                    <!--Review form -->
+                                    {% if request.user.is_authenticated %}
+                                    <form method="post" action="." class="mt-6 mb-6 p-6 bg-gray-100 rounded-xl">
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                                    <div>
+                                        <h6>Leave a review here:</h6>
+                                        <hr>
+                                    <label>Rating</label><br>
+                                        <select name="rating">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3" selected>3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Comment</label><br>
+                                        <textarea name="content"></textarea>
+                                    </div>
+
+                                    <div>
+                                        <button class="btn btn-outline-dark">Submit</button>
+                                    </div>
+                                </form>
+                            {% endif %} {% endif %}
+                            <!--Shows reviews -->
+                            {% for review in product.reviews.all %}
+                                <div>
+                                    <strong>Rating:</strong> {{ review.stars }}/5<br>
+                                    <br>
+                                    <strong>Date:</strong> {{ review.date_added|date:"Y-m-d" }}<br>
+                                    <br>
+                                    <strong>Comment:</strong><br>
+                                    {{ review.content }}
+                                    <hr>
+                                </div>
+                            
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+{% include 'products/includes/quantity-script.html' %}
+{% endblock %}

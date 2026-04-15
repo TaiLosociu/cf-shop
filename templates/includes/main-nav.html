@@ -1,0 +1,41 @@
+<!-- Home menu -->
+<div class="collapse navbar-collapse text-center mt-2 mt-lg-0" id="main-nav">
+    <ul class="navbar-nav w-auto mx-auto">
+        <li class="nav-item">
+            <a class="font-weight-bold color-burgundy mx-lg-3 {% if request.path == home %} current-page {% endif %}"
+                href="{% url 'home' %}">
+                Trang chủ
+            </a>
+        </li>
+
+        <!-- Shop menu-->
+        <li class="nav-item dropdown">
+            <a class="font-weight-bold color-burgundy mx-lg-3 {% if request.path == products %} current-page {% endif %}"
+                href="#" id="shop-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Cửa hàng
+            </a>
+            <div class="dropdown-menu border-0">
+                <a href="{% url 'products' %}?category=Machines,Beans,Grinders" class="dropdown-item">Tất cả sản phẩm</a>
+                <a href="{% url 'products' %}?category=Beans" class="dropdown-item">☕ Hạt cà phê</a>
+                <a href="{% url 'products' %}?category=Machines" class="dropdown-item">🔧 Máy pha cà phê</a>
+                <a href="{% url 'products' %}?category=Grinders" class="dropdown-item">⚙️ Máy xay cà phê</a>
+            </div>
+        </li>
+
+        <!-- About menu-->
+        <li class="nav-item dropdown">
+            <a class="font-weight-bold color-burgundy mx-lg-3 {% if request.path == about %} current-page {% endif %}"
+                href="{% url 'about' %}">
+                Giới thiệu
+            </a>
+        </li>
+
+        <!-- Contact menu -->
+        <li class="nav-item">
+            <a class="font-weight-bold color-burgundy mx-lg-3 {% if request.path == contact %} current-page {% endif %}"
+                href="{% url 'contact' %}">
+                Liên hệ
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Checkout</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Order Summary -->
+        <div class="col-lg-4 order-lg-last mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    {% for item in bag_items %}
+                    <div class="mb-3 pb-3 border-bottom">
+                        <div class="row">
+                            <div class="col-9">
+                                <p class="mb-0"><strong>{{ item.product.name }}</strong></p>
+                                <small class="text-muted">Qty: {{ item.quantity }}</small>
+                            </div>
+                            <div class="col-3 text-right">
+                                <p class="mb-0">₫{{ item.line_total }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="row mt-4">
+                        <div class="col-9">
+                            <p><strong>Subtotal:</strong></p>
+                        </div>
+                        <div class="col-3 text-right">
+                            <p>₫{{ total }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-9">
+                            <p><strong>Delivery:</strong></p>
+                        </div>
+                        <div class="col-3 text-right">
+                            <p>₫{{ delivery_cost }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row border-top pt-3">
+                        <div class="col-9">
+                            <p><strong>Grand Total:</strong></p>
+                        </div>
+                        <div class="col-3 text-right">
+                            <p class="h5 text-primary">₫{{ grand_total }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="col-lg-8 order-lg-first">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Delivery Information</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" id="checkout-form">
+                        {% csrf_token %}
+                        
+                        <!-- Personal Information -->
+                        <div class="form-group">
+                            {{ form.full_name }}
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.email }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.phone_number }}
+                            </div>
+                        </div>
+
+                        <!-- Address Information -->
+                        <div class="form-group">
+                            {{ form.street_address1 }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form.street_address2 }}
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.town_or_city }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.postcode }}
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.country }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.county }}
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Selection -->
+                        <div class="form-group">
+                            <label for="id_payment_method"><strong>Payment Method</strong></label>
+                            <div class="payment-methods mt-3">
+                                <div class="custom-control custom-radio mb-3">
+                                    <input type="radio" class="custom-control-input" id="stripe-payment" 
+                                           name="payment_method" value="stripe" required>
+                                    <label class="custom-control-label" for="stripe-payment">
+                                        <i class="fab fa-cc-stripe"></i> Credit Card (Stripe)
+                                    </label>
+                                </div>
+                                
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="qr-payment" 
+                                           name="payment_method" value="qr_code">
+                                    <label class="custom-control-label" for="qr-payment">
+                                        <i class="fas fa-qrcode"></i> QR Code Payment
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- QR Code Section (Hidden by default) -->
+                        <div id="qr-code-section" class="alert alert-info mt-4" style="display: none;">
+                            <h6><i class="fas fa-qrcode"></i> QR Code Payment</h6>
+                            <p class="mb-2">Scan the QR code below to complete payment:</p>
+                            <div class="text-center">
+                                <div id="qr-placeholder" class="bg-light p-4 rounded mb-3">
+                                    <i class="fas fa-qrcode" style="font-size: 4rem; color: #ddd;"></i>
+                                </div>
+                            </div>
+                            <small class="text-muted">QR code will be generated after you submit your delivery information.</small>
+                        </div>
+
+                        <!-- Save Info Checkbox -->
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="save-info" 
+                                   name="save-info" checked>
+                            <label class="custom-control-label" for="save-info">
+                                Save delivery information to my profile
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-4">
+                            <a href="{% url 'view_bag' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to Bag
+                            </a>
+                            <button type="submit" class="btn btn-primary float-right" id="submit-btn">
+                                <i class="fas fa-lock"></i> Complete Purchase
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('input[name="payment_method"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+        const qrSection = document.getElementById('qr-code-section');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        if (this.value === 'qr_code') {
+            qrSection.style.display = 'block';
+            submitBtn.innerHTML = '<i class="fas fa-qrcode"></i> Generate QR Code';
+        } else {
+            qrSection.style.display = 'none';
+            submitBtn.innerHTML = '<i class="fas fa-lock"></i> Complete Purchase';
+        }
+    });
+});
+
+// Set default to Stripe payment
+document.getElementById('stripe-payment').checked = true;
+</script>
+{% endblock %}

@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 mb-3">
+            <a href="{% url 'products' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Products
+            </a>
+            {% if request.user.is_superuser %}
+                <a href="{% url 'edit_product' product.id %}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Edit Product
+                </a>
+                <a href="{% url 'delete_product' product.id %}" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                    <i class="fas fa-trash"></i> Delete Product
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-lg-6 mb-4">
+            {% if product.image_url %}
+                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="img-fluid rounded shadow">
+            {% elif product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow">
+            {% else %}
+                <div class="bg-light rounded shadow d-flex align-items-center justify-content-center" style="height: 500px;">
+                    <i class="fas fa-image text-muted" style="font-size: 5rem;"></i>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-lg-6">
+            <h1>{{ product.name }}</h1>
+            
+            {% if product.category %}
+            <p class="text-muted mb-3">
+                Category: <a href="{% url 'products' %}?category={{ product.category.name }}">
+                    {{ product.category.get_friendly_name }}
+                </a>
+            </p>
+            {% endif %}
+
+            <div class="mb-3">
+                <h3 class="text-primary">₫{{ product.price|floatformat:0 }}</h3>
+                {% if product.rating %}
+                    <div class="rating text-warning mb-2">
+                        <i class="fas fa-star"></i> {{ product.rating }}/5
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if product.sku %}
+            <div class="mb-3">
+                <small class="text-muted"><strong>SKU:</strong> {{ product.sku }}</small>
+            </div>
+            {% endif %}
+
+            <div class="mb-4">
+                <h5><strong>Description:</strong></h5>
+                <p>{{ product.description }}</p>
+            </div>
+
+            <!-- Add to Bag Form -->
+            <form action="{% url 'add_to_bag' product.id %}" method="POST" class="mb-4">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="quantity"><strong>Quantity:</strong></label>
+                    <div class="input-group" style="width: 200px;">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button" id="decrement">-</button>
+                        </div>
+                        <input type="number" class="form-control text-center" name="quantity" value="1" min="1" id="quantity">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="increment">+</button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    <i class="fas fa-shopping-cart"></i> Add to Bag
+                </button>
+            </form>
+
+            <!-- Payment Options Notice -->
+            <div class="alert alert-info">
+                <i class="fas fa-qrcode"></i> We accept multiple payment methods including QR Code payment at checkout!
+            </div>
+
+            <!-- Reviews Section -->
+            {% if product.reviews.all %}
+            <div class="mt-5">
+                <h4>Customer Reviews</h4>
+                {% for review in product.reviews.all %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="card-title">{{ review.created_by.username }}</h6>
+                                <div class="text-warning mb-2">{{ review.stars }}/5 ⭐</div>
+                            </div>
+                            <small class="text-muted">{{ review.date_added|date:"M d, Y" }}</small>
+                        </div>
+                        <p class="card-text">{{ review.content }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Add Review Section -->
+            {% if user.is_authenticated %}
+            <div class="mt-5">
+                <h4>Leave a Review</h4>
+                <form method="POST" class="card-body">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="stars"><strong>Rating:</strong></label>
+                        <select name="stars" class="form-control" id="stars">
+                            <option value="5">5 Stars - Excellent</option>
+                            <option value="4">4 Stars - Good</option>
+                            <option value="3" selected>3 Stars - Average</option>
+                            <option value="2">2 Stars - Fair</option>
+                            <option value="1">1 Star - Poor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="content"><strong>Your Review:</strong></label>
+                        <textarea name="content" class="form-control" rows="4" placeholder="Share your thoughts..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </form>
+            </div>
+            {% else %}
+            <div class="alert alert-warning mt-5">
+                <a href="{% url 'account_login' %}">Login</a> to leave a review.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    {% with product.category.product_set.all as related_products %}
+    {% if related_products.count > 1 %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <h4>More from {{ product.category.get_friendly_name }}</h4>
+        </div>
+        {% for related in related_products %}
+            {% if related.id != product.id %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {% if related.image_url %}
+                        <img src="{{ related.image_url }}" class="card-img-top" alt="{{ related.name }}" style="height: 200px; object-fit: cover;">
+                    {% elif related.image %}
+                        <img src="{{ related.image.url }}" class="card-img-top" alt="{{ related.name }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="card-title">{{ related.name }}</h6>
+                        <p class="text-primary">₫{{ related.price|floatformat:0 }}</p>
+                        <a href="{% url 'product_detail' related.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+</div>
+
+<script>
+document.getElementById('increment').addEventListener('click', function() {
+    const input = document.getElementById('quantity');
+    input.value = parseInt(input.value) + 1;
+});
+
+document.getElementById('decrement').addEventListener('click', function() {
+    const input = document.getElementById('quantity');
+    if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+    }
+});
+</script>
+{% endblock %}

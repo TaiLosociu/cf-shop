@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Display Messages -->
+    {% if messages %}
+    <div class="row mb-4">
+        <div class="col-md-12">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle"></i> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <!-- Sign Up Form -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="fas fa-user-plus"></i> Đăng Ký Tài Khoản</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="signup_submit" value="1">
+                        
+                        <div class="form-group">
+                            <label for="id_username"><strong>Tên đăng nhập *</strong></label>
+                            {{ signup_form.username }}
+                            {% if signup_form.username.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in signup_form.username.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <small class="form-text text-muted d-block">Chỉ chứa chữ, số, @, +, -, _ và dấu chấm</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_email"><strong>Email *</strong></label>
+                            {{ signup_form.email }}
+                            {% if signup_form.email.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in signup_form.email.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_password1"><strong>Mật khẩu *</strong></label>
+                            {{ signup_form.password1 }}
+                            {% if signup_form.password1.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in signup_form.password1.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <small class="form-text text-muted d-block mt-2">
+                                <strong>Yêu cầu mật khẩu:</strong><br>
+                                • Tối thiểu 8 ký tự<br>
+                                • Hỗn hợp chữ in hoa, thường<br>
+                                • Chứa số và ký tự đặc biệt (@$!%*?&)
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_password2"><strong>Xác nhận Mật khẩu *</strong></label>
+                            {{ signup_form.password2 }}
+                            {% if signup_form.password2.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in signup_form.password2.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% if signup_form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for error in signup_form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <button type="submit" class="btn btn-success btn-block">
+                            <i class="fas fa-check"></i> Đăng Ký
+                        </button>
+                    </form>
+
+                    <hr>
+                    <p class="text-center">
+                        Đã có tài khoản? 
+                        <a href="#login-form">Đăng nhập tại đây</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="col-md-6">
+            <div class="card" id="login-form">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-sign-in-alt"></i> Đăng Nhập</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="login_submit" value="1">
+                        
+                        <div class="form-group">
+                            <label for="id_username"><strong>Tên đăng nhập hoặc Email *</strong></label>
+                            {{ login_form.username }}
+                            {% if login_form.username.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in login_form.username.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_password"><strong>Mật khẩu *</strong></label>
+                            {{ login_form.password }}
+                            {% if login_form.password.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in login_form.password.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="custom-control custom-checkbox mb-3">
+                            {{ login_form.remember_me }}
+                            <label class="custom-control-label" for="id_remember_me">
+                                Ghi nhớ tôi
+                            </label>
+                        </div>
+
+                        {% if login_form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            {% for error in login_form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i> Đăng Nhập
+                        </button>
+                    </form>
+
+                    <hr>
+                    <p class="text-center">
+                        <a href="{% url 'account_reset_password' %}">Quên mật khẩu?</a>
+                    </p>
+                    
+                    <p class="text-center">
+                        Chưa có tài khoản? 
+                        <a href="#signup-form">Đăng ký ngay</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Demo Accounts -->
+            <div class="card mt-3">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-info-circle"></i> Tài khoản Demo</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Admin Account:</strong></p>
+                    <p>Username: <code>admin</code><br>
+                    Password: <code>admin123</code></p>
+                    
+                    <hr>
+                    
+                    <p><strong>Customer Account:</strong></p>
+                    <p>Username: <code>tlsc</code></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+    
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    .card {
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-header {
+        border-radius: 8px 8px 0 0;
+        padding: 1.25rem;
+    }
+    
+    .alert {
+        border-radius: 5px;
+        border-left: 4px solid;
+    }
+    
+    .alert-danger {
+        border-left-color: #dc3545;
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+    
+    .alert-success {
+        border-left-color: #28a745;
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    code {
+        background-color: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}

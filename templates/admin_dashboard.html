@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    {% if request.user.is_superuser %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Total Products</h6>
+                    <h2>{{ products_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Total Users</h6>
+                    <h2>{{ users_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Total Orders</h6>
+                    <h2>{{ orders_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Categories</h6>
+                    <h2>{{ categories_count }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Management Options -->
+    <div class="row">
+        <div class="col-12">
+            <h3>Quản lý Hệ Thống</h3>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <!-- Products Management -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-boxes"></i> Quản lý Sản phẩm</h5>
+                </div>
+                <div class="card-body">
+                    <p>Thêm, sửa, xóa sản phẩm cà phê và máy</p>
+                    <a href="{% url 'products' %}" class="btn btn-primary">
+                        <i class="fas fa-list"></i> Danh sách Sản phẩm
+                    </a>
+                    <a href="{% url 'add_product' %}" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Thêm Sản phẩm
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories Management -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-tags"></i> Quản lý Danh mục</h5>
+                </div>
+                <div class="card-body">
+                    <p>Quản lý danh mục sản phẩm</p>
+                    <a href="/admin/products/category/" class="btn btn-success">
+                        <i class="fas fa-list"></i> Danh mục
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Management -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-shopping-bag"></i> Quản lý Đơn hàng</h5>
+                </div>
+                <div class="card-body">
+                    <p>Xem và quản lý đơn hàng từ khách hàng</p>
+                    <a href="/admin/checkout/order/" class="btn btn-info">
+                        <i class="fas fa-list"></i> Danh sách Đơn hàng
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Management -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-warning text-white">
+                    <h5 class="mb-0"><i class="fas fa-users"></i> Quản lý Người dùng</h5>
+                </div>
+                <div class="card-body">
+                    <p>Quản lý tài khoản người dùng</p>
+                    <a href="/admin/auth/user/" class="btn btn-warning">
+                        <i class="fas fa-list"></i> Danh sách Người dùng
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Management -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0"><i class="fas fa-comments"></i> Quản lý Đánh giá</h5>
+                </div>
+                <div class="card-body">
+                    <p>Xem và quản lý đánh giá sản phẩm</p>
+                    <a href="/admin/products/productreview/" class="btn btn-danger">
+                        <i class="fas fa-list"></i> Danh sách Đánh giá
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Django Admin -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-cog"></i> Django Admin</h5>
+                </div>
+                <div class="card-body">
+                    <p>Truy cập Django Admin Panel đầy đủ</p>
+                    <a href="/admin/" class="btn btn-secondary">
+                        <i class="fas fa-external-link-alt"></i> Django Admin
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="alert alert-danger text-center">
+        <i class="fas fa-lock"></i>
+        <h4>Chỉ Admin mới có thể truy cập trang này!</h4>
+        <p>Bạn không có quyền truy cập admin panel.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Quay lại Trang chủ</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

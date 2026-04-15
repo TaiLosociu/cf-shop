@@ -1,0 +1,117 @@
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+    --primary-brown: #6F4E37;
+    --secondary-brown: #8B6F47;
+    --accent-gold: #D4A574;
+    --accent-copper: #B8860B;
+    --text-light: #ffffff;   /* chữ trắng */
+}
+
+/* GLOBAL */
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background: url('https://res.cloudinary.com/dztdhnhl9/image/upload/v1679652595/media/jon-tyson-pEGyLHAPfVw-unsplash_oxpdrc.jpg') 
+                no-repeat center center fixed;
+    background-size: cover;
+    color: var(--text-light);
+}
+
+/* Overlay tối để chữ nổi bật */
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4); /* lớp phủ đen mờ */
+    z-index: -1;
+}
+
+/* TEXT */
+p {
+    color: var(--text-light);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+}
+h1, h2, h3, h4, h5, h6 {
+    color: var(--accent-gold); /* tiêu đề vàng nhạt */
+    font-weight: 700;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+}
+
+/* LINKS */
+a {
+    text-decoration: none;
+    color: var(--accent-gold);
+    transition: all 0.3s ease;
+}
+a:hover {
+    color: var(--accent-copper);
+}
+
+/* BUTTONS */
+.btn-black, .shop-now-button {
+    background: var(--primary-brown);
+    color: #fff;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    transition: all 0.3s ease;
+}
+.btn-black:hover, .shop-now-button:hover {
+    background: var(--secondary-brown);
+    transform: translateY(-2px);
+}
+.btn-outline-black {
+    background: transparent;
+    color: #fff !important;
+    border: 2px solid #fff;
+    border-radius: 6px;
+}
+.btn-outline-black:hover {
+    background: #fff;
+    color: var(--primary-brown) !important;
+}
+
+/* PRODUCT CARD */
+.card {
+    border-radius: 12px;
+    background: rgba(255,255,255,0.1); /* nền trong suốt nhẹ */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+}
+.card-img-top {
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 2px solid var(--accent-gold);
+}
+.card-title {
+    color: var(--accent-gold);
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+/* SCROLL TO TOP */
+.btt-button {
+    height: 42px;
+    width: 42px;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, var(--primary-brown), var(--accent-copper));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+}
+.btt-button:hover {
+    transform: translateY(-3px);
+}
