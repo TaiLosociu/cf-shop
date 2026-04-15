@@ -33,9 +33,15 @@ ALLAUTH_DIR = os.path.join(BASE_DIR, 'templates', 'allauth')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # Set to False in production
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '*.onrender.com',
+    'cf-shop.onrender.com',
+].extend(os.getenv('ALLOWED_HOSTS', '').split(',')) if os.getenv('ALLOWED_HOSTS') else None or ALLOWED_HOSTS
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*.onrender.com', 'cf-shop.onrender.com']
 
 
 
@@ -75,6 +81,7 @@ SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -152,11 +159,14 @@ LOGIN_REDIRECT_URL = '/'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-SECRET_KEY = env('SECRET_KEY', default='django-insecure-dev-key-change-in-production')
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-dev-key-change-in-production')
 
-if env('DATABASE_URL', default=None):
+if os.getenv('DATABASE_URL'):
     DATABASES = {
-        'default': dj_database_url.parse(env('DATABASE_URL'))
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600
+        )
     }
 else:
     DATABASES = {
@@ -205,13 +215,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# Use local storage for development, Cloudinary for production
-if 'PRODUCTION' in os.environ or 'DATABASE_URL' in os.environ:
-    STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
-else:
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Use Whitenoise for serving static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'staticfiles')
